@@ -1,6 +1,7 @@
 import os
 import re
 from datetime import datetime
+import time
 import ocrspace
 import redis
 import validators
@@ -8,15 +9,6 @@ import validators
 
 api = ocrspace.API()
 r = redis.Redis(host='redis-10201.c92.us-east-1-3.ec2.cloud.redislabs.com',port=10201, db=0, password='Wy69cuWGscyW4x9sRPRh1Wj1IEAdOLs6')
-
-r.hset("mmm123", mapping={"first": 1, "second": '222'})
-print(r.zadd(r.hget("mmm123", "second"), mapping={"lalala": 123, "poiu": 444, "ffljsfljf": 987}))
-# print(r.zrange())
-r.zadd("candidates", mapping={"Candidate1": 100, "Candidate2": 88})
-r.zadd("candidates", mapping = {"Candidate3": 99})
-print(r.zrange("candidates", 0, -1))
-if r.zrank("candidates", "Candidate1"):
-    print("inside!")
 
 
 def validate_user_input_type(user_input):
@@ -71,45 +63,42 @@ def check_parking_access(licence_plate):
     """
     licence_plate = licence_plate.strip()
     access = 0
-    time = str(datetime.now())
+    time_now = time.time()
+    denied = "Denied"
+    approved = "Approved"
 
-    known = r.hget(licence_plate, 'timestamp')
-    known2 = r.hget(licence_plate + '1', 'timestamp')
+    # checking if this vehicle is under Denied or Approved key - the vehicle has tried to enter in the past
+    # updating the time it tried to enter now.
+    if r.zrank(denied, licence_plate) is not None:
+        print(f"Vehicle {licence_plate } has tried to enter in the past at {r.zscore(denied, licence_plate)} and was ==={denied}!===")
+        r.zadd(denied, mapping={licence_plate: time_now})
+        return 0
+    elif r.zrank(approved, licence_plate) is not None:
+        print(f"Vehicle {licence_plate } has tried to enter in the past at {r.zscore(denied, licence_plate)} and was ==={approved}!===")
+        r.zadd(approved, mapping={licence_plate: time_now})
+        return 1
 
-
+    print(f"Vehicle {licence_plate} is not in data base, checking if it can access the parking lot")
     if licence_plate[-1] == '6' or licence_plate[-1] == 'G':
         car_type = 'Public Transportation'
-        car_type_num = 1
 
     elif "L" in licence_plate or "M" in licence_plate:
         car_type = 'Military or Law Enforcement'
-        car_type_num = 2
 
     elif not re.search('[a-zA-Z]', licence_plate):
-        car_type = 'no letters'
-        car_type_num = 3
+        car_type = 'No letters'
 
     else:
-        car_type = 'private'
-        car_type_num = 0
+        car_type = 'Private'
         access = 1
 
-    if not access:
-        print(f"{licence_plate} car plate is a {car_type} vehicle type which is not allowed in the parking lot\n"
-              f"=== Access Denied! ===")
-    else:
-        print(f"Congratulation! {licence_plate} car plate is a {car_type} vehicle type which may enter the parking lot!\n"
-              f"=== Access Granted! ===")
+    result = approved if access else denied
+    print(f"{licence_plate} car plate is a {car_type} vehicle type. The entrance to the parking lot is ==={result}!===")
 
-    print(f"Inserting data into data base:\ncar plate: {licence_plate}, type: {car_type}, timestamp: {time}, access: {access}")
-
-    r.hset(licence_plate, mapping={'type': car_type, 'timestamp': time, 'access': access})
-
-    #todo: use r.zadd for three DB - checked, denide, approved - score is time, value is car plate
-
-    # r.zadd(licence_plate, mapping={'type': car_type_num, 'timestamp': time, 'access': access})
-    # r.zadd(licence_plate, mapping={car_type_num: 'type', 123123: 'timestamp', access: 'access'})
-    # r.zrange(licence_plate, 0, -1)
+    print(f"Inserting data into data base: key = {result}, value = {licence_plate}, score = {time_now}")
+    r.zadd(result, mapping={licence_plate: time_now})
+    print(f"Inserting data into data base: key = {car_type}, value = {licence_plate}, score = {time_now}")
+    r.zadd(car_type, mapping={licence_plate: time_now})
 
 
 input_msg = "Please enter a url or a path to a file of a car plate image\n"
