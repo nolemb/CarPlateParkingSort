@@ -9,32 +9,31 @@ The program decides if the vehicle may enter the parking lot by these rules:
 License plate, vehicle type, time of the attempt to enter, approved or denied entrance is stored in redis DB.
 
 User can check one input at a time, as meany times he wants.
-To terminate, user should use the 'Enter' key for an empty input.
 
-Program will be terminated in the following cases: 
-1. User input is invalid
-2. ocrspace exception
-3. ocrspace failed to extract text from image
-4. Image does not contain any text
+## Program will be terminated in the following cases: 
+1. To terminate, user should use the 'Enter' key for an empty input.
+2. User input is invalid
+3. ocrspace exception
+4. ocrspace failed to extract text from image
+5. Image does not contain any text
 
-
-##Installation
+## Installation
 1. Python 3.5 and up
 Simply install from pip:
 2. pip install ocrspace
 3. pip install redis
 4. pip install requests
 
-##Requirements:
+## Requirements:
 Running redis locally or use cloud redis
  local: `redis.Redis(host=localhost,port=6379)`, those are the default values
- cloud: register to [RdisLabs cloud] (https://redislabs.com/redis-enterprise-cloud/overview/)
+ cloud: register to [RdisLabs cloud](https://redislabs.com/redis-enterprise-cloud/overview/)
   You will get a host, port and a password.
   Inset in the module `Redis_DB`, in `self.redis_db = redis.Redis()`
   `redis.Redis(host='your host', port= your port, password='your password')`
 
 
-##OCRSPACE Exceptions are handled by OCRSPACE, for example:
+## OCRSPACE Exceptions are handled by OCRSPACE, for example:
 1. timeout
 2. Not a valid file format
 3. Unable to recognize the file type
