@@ -10,13 +10,6 @@ License plate, vehicle type, time of the attempt to enter, approved or denied en
 
 User can check one input at a time, as meany times he wants.
 
-## Program will be terminated in the following cases: 
-1. To terminate, user should use the 'Enter' key for an empty input.
-2. User input is invalid
-3. ocrspace exception
-4. ocrspace failed to extract text from image
-5. Image does not contain any text
-
 ## Installation
 1. Python 3.5 and up
 Simply install from pip:
@@ -32,6 +25,12 @@ Running redis locally or use cloud redis
   Inset in the module `Redis_DB`, in `self.redis_db = redis.Redis()`
   `redis.Redis(host='your host', port= your port, password='your password')`
 
+## Program will be terminated in the following cases: 
+1. To terminate, user should use the 'Enter' key for an empty input.
+2. User input is invalid
+3. ocrspace exception
+4. ocrspace failed to extract text from image
+5. Image does not contain any text
 
 ## OCRSPACE Exceptions are handled by OCRSPACE, for example:
 1. timeout
