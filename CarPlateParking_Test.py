@@ -1,4 +1,7 @@
-from CarPlateParking_Infra import UserInputHandler, ImageHandler, LicensePlateHandler, RedisDB
+from Handlers.UserInput_Handler import UserInputHandler
+from Handlers.Image_Handler import ImageHandler
+from Handlers.LicensePlate_Handler import LicensePlateHandler
+from Redis_DB import RedisDB
 
 if __name__ == "__main__":
     user_input = UserInputHandler()
