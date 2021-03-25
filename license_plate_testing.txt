@@ -1,0 +1,35 @@
+POSITIVE:
+
+Private:
+https://upload.wikimedia.org/wikipedia/commons/e/e8/Singapore_licence_plate_1990_rear_SDN7484U.jpg?1616501872169
+http://www.travel-images.com/pht/congo-dr4.jpg
+
+Military:
+http://newsimg.bbc.co.uk/media/images/44282000/jpg/_44282207_plate.416.body.jpg
+http://www.olavsplates.com/foto_a/a_l2947p_close.jpg
+https://3dwarehouse.sketchup.com/warehouse/v1.0/publiccontent/dd2c82a0-11ca-4d55-8d5b-5dc96d4d8e88
+
+Public:
+https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Singapore_licence_plate_2000_front_SBS_6216G.jpg/1920px-Singapore_licence_plate_2000_front_SBS_6216G.jpg?1616503073524
+
+
+no alph:
+
+
+
+
+NEGATIVE:
+invalid input:
+123456
+C:\Users\my_user\Downloads\plates\plates\not_existing_file_path_to_file
+https://.zlkj;lfkj;zfg
+
+Invalid license_plate:
+too short: https://storage.googleapis.com/customeuropeanplates/short-plate-2-min.png
+too long: https://3dwarehouse.sketchup.com/warehouse/v1.0/publiccontent/dd2c82a0-11ca-4d55-8d5b-5dc96d4d8e88
+
+
+ocrspace fails to extract text from image:
+http://www.olavsplates.com/foto_a/a_s170mz_close.jpg
+https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Plak-IL-Shakhsi_8_digits.svg/600px-Plak-IL-Shakhsi_8_digits.svg.png
+https://www.nbn.org.il/wp-content/uploads/2014/11/Israeli_reg_6732.jpg

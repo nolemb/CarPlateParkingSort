@@ -1,18 +1,21 @@
-import validators
 import os
-import ocrspace
 import re
 import time
 import datetime
+import validators
+import ocrspace
 import redis
 
 
 class UserInputHandler:
     def __init__(self):
+        """
+        Getting an input from the user and handling it
+        """
         input_msg = "\n\nPlease enter a url or a path to a file of a license plate image, Enter to terminate\n"
         self.user_input = input(input_msg)
-        self.file_or_url = None
-        self.input_time = time.time()
+        self.file_or_url = None  # if user input is a file or a url address this argument will be updated
+        self.input_time = time.time()  # the time the user insert an input, will be used for the Redis DB
 
     def is_valid(self):
         """
@@ -59,8 +62,8 @@ class ImageHandler:
     def extract_txt_from_image(self):
         """
         Extracting text from a given image using ocrspace
-        self.file_or_url: str of 'URL' or 'FILE' to determine in which txt extraction function to use
-        self.image_adrs str to the image url or file
+        :param self.file_or_url: str of 'URL' or 'FILE' to determine in which txt extraction function to use
+        :param self.image_adrs str to the image url or file
         :return: self.txt_from_image: extracted string from image
         :raise if ocr did not extract any txt from image, will raise an Exception
         """
@@ -90,6 +93,7 @@ class ImageHandler:
 class LicensePlateHandler:
     def __init__(self, license_plate=''):
         """
+        Handling with the license plate - validity, access to parking lot
         :param license_plate: str of a license plate
         """
         self.license_plate = license_plate.replace('\r\n', ' ').strip()
@@ -175,6 +179,7 @@ def singleton(cls, *args, **kw):
 class RedisDB:
     def __init__(self):
         """
+        Handles the Redis data base - check if license plate is already in DB, insert license plate into DB
         :param self.redis_db holds the Redis client object
         """
         self.redis_db = redis.Redis(host='redis-10201.c92.us-east-1-3.ec2.cloud.redislabs.com',
