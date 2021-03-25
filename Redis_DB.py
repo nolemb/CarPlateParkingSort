@@ -28,8 +28,8 @@ class RedisDB:
         Handles the Redis data base - check if license plate is already in DB, insert license plate into DB
         :param self.redis_db holds the Redis client object
         """
-        self.redis_db = redis.Redis(host='redis-10201.c92.us-east-1-3.ec2.cloud.redislabs.com',
-                                    port=10201, db=0, password='Wy69cuWGscyW4x9sRPRh1Wj1IEAdOLs6')
+        # host='localhost', port=6379, db=0 are default
+        self.redis_db = redis.Redis()
 
     def check_in_db(self, license_plate, input_time):
         """
