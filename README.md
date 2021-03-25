@@ -8,7 +8,7 @@ The program decides if the vehicle may enter the parking lot by these rules:
 
 License plate, vehicle type, time of the attempt to enter, approved or denied entrance is stored in redis DB.
 
-User can check one input at a time, as meany times he wants.
+User can check one input at a time, as many times he wants.
 
 ## Installation
 1. Python 3.5 and up
@@ -26,7 +26,7 @@ Running redis locally or use cloud redis
   `redis.Redis(host='your host', port= your port, password='your password')`
 
 ## Program will be terminated in the following cases: 
-1. To terminate, user should use the 'Enter' key for an empty input.
+1. To terminate, user should use the **'Enter'** key for an empty input.
 2. User input is invalid
 3. ocrspace exception
 4. ocrspace failed to extract text from image
@@ -38,4 +38,7 @@ Running redis locally or use cloud redis
 3. Unable to recognize the file type
 4. If you are using Redis as a FREE user you might encounter this exception:
   "Exception: You may only perform this action up to maximum 10 number of times within 600 seconds"
+  
+### Testing:
+file **License_plate_testing_cases.txt** contains Positive and Negative tests
 
