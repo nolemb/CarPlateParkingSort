@@ -27,3 +27,6 @@ cloud: register to RdisLabs cloud at https://redislabs.com/redis-enterprise-clou
 OCR Exceptions are handled by OCR, for example:
 timeout
 not a valid file format
+If you are using Redis as a FREE user you might encounter this exception:
+"Exception: You may only perform this action upto maximum 10 number of times within 600 seconds"
+
